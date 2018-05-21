@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/18 20:42:42 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/05/19 18:15:17 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/05/21 02:49:31 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ int		main(int ac, char **av)
 		//ft_putnbr(test);
 		ft_putstr(line);
 	}
-	ft_print_memory(line, 30);
+	ft_putstr(line);
+	//ft_print_memory(line, 30);
 	close(fd);
 	return (0);
 }
@@ -66,7 +67,7 @@ void	push_fd(t_fd **list, const int fd)
 	t_fd	*new;
 
 	ptr = *list;
-	new = (t_fd*)malloc(sizeof(t_fd));
+	new = (t_fd*)malloc(sizeof(*new));
 	new->fd = fd;
 	new->buff = NULL;
 	new->size = 0;
