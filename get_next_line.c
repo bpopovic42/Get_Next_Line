@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/18 20:42:42 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/05/21 02:49:31 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/05/21 03:10:49 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int		main(int ac, char **av)
 		//ft_putnbr(test);
 		ft_putstr(line);
 	}
-	ft_putstr(line);
+	//ft_putstr(line);
 	//ft_print_memory(line, 30);
 	close(fd);
 	return (0);
@@ -49,7 +49,10 @@ int		get_next_line(const int fd, char **line)
 	{
 		if ((ptr = find_fd(list, fd)))
 		{
-			return (read_from_fd_buffer(ptr, buff, line));
+			int lol = read_from_fd_buffer(ptr, buff, line);
+			//ft_putstr(*line);
+			//return (read_from_fd_buffer(ptr, buff, line));
+			return (lol);
 		}
 	}
 	else
@@ -110,8 +113,9 @@ int		read_from_fd_buffer(t_fd *ptr, char *buff, char **line)
 			ptr->buff = ft_strdup(buff);
 	}
 	ptr->size = trim_buff(&(ptr->buff), line);
-	ft_putnbr(ptr->size);
-	ft_putstr(ptr->buff);
+	//ft_putnbr(ptr->size);
+	//ft_putstr(ptr->buff);
+	//ft_putstr(*line);
 	return (ptr->size);
 }
 
@@ -145,7 +149,6 @@ int		trim_buff(char **buff, char **line)
 		i++;
 	*line = ft_strndup(*buff + j, i);
 	ptr = ft_strdup(*buff + (j + i));
-	ft_strdel(buff);
 	*buff = ptr;
 	ft_strdel(&ptr);
 	return (ft_strlen(*buff));
