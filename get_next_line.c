@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/18 20:42:42 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/05/21 03:10:49 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/05/21 03:57:36 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,17 +24,28 @@ int		main(int ac, char **av)
 	int		fd;
 	int		test;
 
-	test = 0;
+	test = 1;
 	fd = open(av[1], O_RDONLY);
+	int fd2 = open(av[2], O_RDONLY);
+	int i = 0;
 	//ft_putnbr(get_next_line(fd, &line));
-	while ((test = get_next_line(fd, &line)))
+	while (test)
 	{
+		if (i % 2 == 0)
+			test = get_next_line(fd, &line);
+		else
+		{
+			test = get_next_line(fd2, &line);
+		}
 		//ft_putnbr(test);
-		ft_putstr(line);
+		//ft_putstr(line);
+		//ft_putchar('\n');
+		i++;
 	}
 	//ft_putstr(line);
 	//ft_print_memory(line, 30);
 	close(fd);
+	close(fd2);
 	return (0);
 }
 
@@ -42,7 +53,7 @@ int		get_next_line(const int fd, char **line)
 {
 	static t_fd		*list;
 	t_fd			*ptr;
-	char			buff[BUFF_SIZE];
+	char			buff[BUFF_SIZE + 1];
 
 	bzero(buff, BUFF_SIZE);
 	if (list)
@@ -52,6 +63,7 @@ int		get_next_line(const int fd, char **line)
 			int lol = read_from_fd_buffer(ptr, buff, line);
 			//ft_putstr(*line);
 			//return (read_from_fd_buffer(ptr, buff, line));
+			ft_putstr(*line);
 			return (lol);
 		}
 	}
@@ -103,32 +115,40 @@ int		read_from_fd_buffer(t_fd *ptr, char *buff, char **line)
 
 	size = 1;
 	i = 0;
-	while (!has_line(ptr->buff))
+	while (!has_line(ptr->buff) && size > 0)
 	{
-		ft_bzero(buff, BUFF_SIZE);
+		ft_bzero(buff, BUFF_SIZE + 1);
 		size = read(ptr->fd, buff, BUFF_SIZE);
+		//ft_putstr(buff);
 		if (ptr->buff)
-			ft_strjoin(ptr->buff, buff);
+		{
+			ptr->buff = ft_strjoin(ptr->buff, buff);
+		}
 		else
 			ptr->buff = ft_strdup(buff);
 	}
 	ptr->size = trim_buff(&(ptr->buff), line);
 	//ft_putnbr(ptr->size);
+	//ft_putchar(' ');
 	//ft_putstr(ptr->buff);
 	//ft_putstr(*line);
-	return (ptr->size);
+	return (size > 0 || ptr->size > 0 ? 1 : 0);
 }
 
 int		has_line(char *buff)
 {
 	int i;
+	int flag;
 
 	i = 0;
+	flag = 0;
 	if (buff == NULL)
 		return (0);
 	while (buff[i])
 	{
-		if (buff[i] == '\n')
+		if (flag == 0 &&buff[i] != '\n')
+			flag = 1;
+		if (buff[i] == '\n' && flag == 1)
 			return (1);
 		i++;
 	}
