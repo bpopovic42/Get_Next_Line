@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/04 16:27:54 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/05/18 21:25:12 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/05/22 16:23:23 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,14 @@ typedef struct		s_list
 	size_t			content_size;
 	struct s_list	*next;
 }					t_list;
+
+typedef struct		s_hash
+{
+	size_t			key;
+	size_t			content_size;
+	void			*content;
+}					t_hash;
+
 /*
 ** PART 1 FUNCTIONS
 */
@@ -105,5 +113,7 @@ void				*ft_print_memory(void *addr, unsigned int size);
 int					ft_issign(int c);
 int					ft_char_count(char *s, char find);
 void				ft_lstpush(t_list **alist, t_list *list);
+char				*ft_strappend(char *dst, char *append);
+void				ft_del(void *content, size_t size);
 
 #endif

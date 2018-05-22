@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/18 20:45:59 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/05/21 03:40:42 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/05/22 15:30:18 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,8 @@
 
 typedef struct		s_fd
 {
-	int			size;
-	int			fd;
-	char		*buff;
-	struct s_fd	*next;
+	int				fd;
+	char			*buff;
 }					t_fd;
 
 int		get_next_line(const int fd, char **line);

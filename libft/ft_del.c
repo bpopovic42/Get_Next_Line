@@ -1,25 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strndup.c                                       :+:      :+:    :+:   */
+/*   ft_del.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/04/13 19:26:49 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/05/21 18:50:01 by bopopovi         ###   ########.fr       */
+/*   Created: 2018/05/22 16:20:19 by bopopovi          #+#    #+#             */
+/*   Updated: 2018/05/22 16:22:56 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include <stdlib.h>
 
-char	*ft_strndup(const char *s1, size_t n)
+void	ft_del(void *content, size_t size)
 {
-	char *res;
-
-	if (!(res = ft_strnew(n)))
-		return (NULL);
-	res = ft_strncpy(res, s1, n + 1);
-	res[n] = '\0';
-	return (res);
+	size = 0;
+	free(content);
 }

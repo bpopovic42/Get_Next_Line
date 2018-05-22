@@ -1,25 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strndup.c                                       :+:      :+:    :+:   */
+/*   ft_strappend.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/04/13 19:26:49 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/05/21 18:50:01 by bopopovi         ###   ########.fr       */
+/*   Created: 2018/05/21 18:50:36 by bopopovi          #+#    #+#             */
+/*   Updated: 2018/05/21 22:19:40 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <stdlib.h>
 
-char	*ft_strndup(const char *s1, size_t n)
+char	*ft_strappend(char *dst, char *append)
 {
-	char *res;
+	size_t	d_len;
+	size_t	a_len;
+	char	*new;
 
-	if (!(res = ft_strnew(n)))
-		return (NULL);
-	res = ft_strncpy(res, s1, n + 1);
-	res[n] = '\0';
-	return (res);
+	d_len = ft_strlen(dst);
+	a_len = ft_strlen(append);
+	new = ft_strnew(d_len + a_len);
+	new = ft_strcpy(new, dst);
+	new = ft_strncat(new, append, a_len);
+	new[d_len + a_len] = '\0';
+	//ft_strdel(&dst);
+	dst = new;
+	new = NULL;
+	return (dst);
 }
