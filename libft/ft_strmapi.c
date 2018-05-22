@@ -1,28 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_strmapi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/05/18 20:45:59 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/05/22 16:33:51 by bopopovi         ###   ########.fr       */
+/*   Created: 2018/04/18 19:30:38 by bopopovi          #+#    #+#             */
+/*   Updated: 2018/04/25 16:30:35 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GNL_H
-# define GNL_H
+#include "libft.h"
+#include <stdlib.h>
 
-# define BUFF_SIZE 1
-
-# include "./libft/libft.h"
-
-typedef struct		s_fd
+char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 {
-	int				fd;
-	char			*buff;
-}					t_fd;
+	t_uint	i;
+	t_uint	len;
+	char	*map;
 
-int		get_next_line(const int fd, char **line);
-
-#endif
+	i = 0;
+	len = (t_uint)ft_strlen(s);
+	if (!(map = (char*)malloc(sizeof(*map) * len + 1)))
+		return (NULL);
+	map[len] = '\0';
+	while (s[i])
+	{
+		map[i] = f(i, s[i]);
+		i++;
+	}
+	return (map);
+}

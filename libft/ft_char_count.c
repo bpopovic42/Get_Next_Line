@@ -1,28 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_char_count.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bpopov <bpopov@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/05/18 20:45:59 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/05/22 16:33:51 by bopopovi         ###   ########.fr       */
+/*   Created: 2018/04/28 01:40:20 by bpopov            #+#    #+#             */
+/*   Updated: 2018/05/17 21:23:15 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GNL_H
-# define GNL_H
+#include "libft.h"
 
-# define BUFF_SIZE 1
+/*
+** Count occurences of find in s, return count
+*/
 
-# include "./libft/libft.h"
-
-typedef struct		s_fd
+int		ft_char_count(char *s, char find)
 {
-	int				fd;
-	char			*buff;
-}					t_fd;
+	int count;
 
-int		get_next_line(const int fd, char **line);
-
-#endif
+	count = 0;
+	while (*s)
+	{
+		if (*s == find)
+			count++;
+		s++;
+	}
+	return (count);
+}

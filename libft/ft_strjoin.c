@@ -1,28 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/05/18 20:45:59 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/05/22 16:33:51 by bopopovi         ###   ########.fr       */
+/*   Created: 2018/04/19 15:35:28 by bopopovi          #+#    #+#             */
+/*   Updated: 2018/04/25 16:30:50 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GNL_H
-# define GNL_H
+#include "libft.h"
 
-# define BUFF_SIZE 1
-
-# include "./libft/libft.h"
-
-typedef struct		s_fd
+char	*ft_strjoin(char const *s1, char const *s2)
 {
-	int				fd;
-	char			*buff;
-}					t_fd;
+	char	*dst;
+	size_t	s1_len;
+	size_t	s2_len;
 
-int		get_next_line(const int fd, char **line);
-
-#endif
+	s1_len = ft_strlen(s1);
+	s2_len = ft_strlen(s2);
+	if (!(dst = ft_strnew(s1_len + s2_len)))
+		return (NULL);
+	dst = ft_strncpy(dst, s1, s1_len);
+	dst = ft_strncat(dst, s2, (s1_len + s2_len));
+	return (dst);
+}

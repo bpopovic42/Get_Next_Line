@@ -1,28 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_lstpush.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/05/18 20:45:59 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/05/22 16:33:51 by bopopovi         ###   ########.fr       */
+/*   Created: 2018/05/01 20:53:53 by bopopovi          #+#    #+#             */
+/*   Updated: 2018/05/01 22:34:54 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GNL_H
-# define GNL_H
+#include "libft.h"
 
-# define BUFF_SIZE 1
-
-# include "./libft/libft.h"
-
-typedef struct		s_fd
+void	ft_lstpush(t_list **alist, t_list *list)
 {
-	int				fd;
-	char			*buff;
-}					t_fd;
+	t_list	*ptr;
 
-int		get_next_line(const int fd, char **line);
-
-#endif
+	if (*alist == NULL)
+		*alist = list;
+	else
+	{
+		ptr = *alist;
+		while (ptr->next != NULL)
+			ptr = ptr->next;
+		ptr->next = list;
+	}
+}

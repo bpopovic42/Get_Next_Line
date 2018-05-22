@@ -1,28 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_memccpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/05/18 20:45:59 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/05/22 16:33:51 by bopopovi         ###   ########.fr       */
+/*   Created: 2018/04/16 15:59:50 by bopopovi          #+#    #+#             */
+/*   Updated: 2018/04/16 16:41:03 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GNL_H
-# define GNL_H
+#include "libft.h"
 
-# define BUFF_SIZE 1
-
-# include "./libft/libft.h"
-
-typedef struct		s_fd
+void	*ft_memccpy(void *dst, const void *src, int c, size_t n)
 {
-	int				fd;
-	char			*buff;
-}					t_fd;
+	t_uchar *dst_ptr;
+	t_uchar *src_ptr;
 
-int		get_next_line(const int fd, char **line);
-
-#endif
+	dst_ptr = (t_uchar*)dst;
+	src_ptr = (t_uchar*)src;
+	while (n--)
+	{
+		*dst_ptr++ = *src_ptr;
+		if (*src_ptr == (t_uchar)c)
+			return (dst_ptr);
+		src_ptr++;
+	}
+	return (NULL);
+}

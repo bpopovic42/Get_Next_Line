@@ -1,28 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/05/18 20:45:59 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/05/22 16:33:51 by bopopovi         ###   ########.fr       */
+/*   Created: 2018/04/12 16:18:15 by bopopovi          #+#    #+#             */
+/*   Updated: 2018/04/28 19:57:45 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GNL_H
-# define GNL_H
+#include "libft.h"
 
-# define BUFF_SIZE 1
-
-# include "./libft/libft.h"
-
-typedef struct		s_fd
+int		ft_atoi(const char *str)
 {
-	int				fd;
-	char			*buff;
-}					t_fd;
+	long long	res;
+	int			flag;
 
-int		get_next_line(const int fd, char **line);
-
-#endif
+	res = 0;
+	while (ft_isspace(*str))
+		str++;
+	flag = *str == '-' ? -1 : 1;
+	str += *str == '-' || *str == '+' ? 1 : 0;
+	while (*str && (*str >= '0' && *str <= '9'))
+		res = (res * 10) + (*str++ - '0');
+	return ((int)(res * flag));
+}

@@ -1,28 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_strstr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/05/18 20:45:59 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/05/22 16:33:51 by bopopovi         ###   ########.fr       */
+/*   Created: 2018/04/10 17:02:12 by bopopovi          #+#    #+#             */
+/*   Updated: 2018/04/25 16:53:10 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GNL_H
-# define GNL_H
+#include "libft.h"
 
-# define BUFF_SIZE 1
-
-# include "./libft/libft.h"
-
-typedef struct		s_fd
+char	*ft_strstr(const char *src, const char *find)
 {
-	int				fd;
-	char			*buff;
-}					t_fd;
+	size_t flen;
 
-int		get_next_line(const int fd, char **line);
-
-#endif
+	flen = ft_strlen(find);
+	if (!*src && !*find)
+		return ((char*)src);
+	while (*src)
+	{
+		if (ft_strnequ(src, find, flen))
+			return ((char*)src);
+		src++;
+	}
+	return (NULL);
+}

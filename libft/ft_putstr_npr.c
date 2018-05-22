@@ -1,28 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_putstr_npr.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/05/18 20:45:59 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/05/22 16:33:51 by bopopovi         ###   ########.fr       */
+/*   Created: 2018/04/11 18:08:03 by bopopovi          #+#    #+#             */
+/*   Updated: 2018/04/11 18:14:05 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GNL_H
-# define GNL_H
+#include "libft.h"
 
-# define BUFF_SIZE 1
-
-# include "./libft/libft.h"
-
-typedef struct		s_fd
+void	ft_putstr_npr(char *str)
 {
-	int				fd;
-	char			*buff;
-}					t_fd;
-
-int		get_next_line(const int fd, char **line);
-
-#endif
+	while (*str)
+	{
+		if (*str < 32 || *str == 127)
+		{
+			ft_putchar('\\');
+			ft_putnbr_base((int)*str, "01234567");
+		}
+		else
+			ft_putchar(*str);
+		str++;
+	}
+}

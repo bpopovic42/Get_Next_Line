@@ -1,28 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_strtrimlol.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/05/18 20:45:59 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/05/22 16:33:51 by bopopovi         ###   ########.fr       */
+/*   Created: 2018/04/19 17:45:47 by bopopovi          #+#    #+#             */
+/*   Updated: 2018/04/25 16:31:14 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GNL_H
-# define GNL_H
+#include "libft.h"
 
-# define BUFF_SIZE 1
-
-# include "./libft/libft.h"
-
-typedef struct		s_fd
+char	*ft_strtrim(char const *s)
 {
-	int				fd;
-	char			*buff;
-}					t_fd;
+	size_t	len;
+	char	*res;
 
-int		get_next_line(const int fd, char **line);
-
-#endif
+	while (ft_isspace(*s))
+		s++;
+	if ((len = ft_strlen(s)))
+	{
+		while (ft_isspace(s[len - 1]))
+			len--;
+	}
+	if (!(res = ft_strsub(s, 0, len)))
+		return (NULL);
+	return (res);
+}

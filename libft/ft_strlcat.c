@@ -1,28 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_strlcat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/05/18 20:45:59 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/05/22 16:33:51 by bopopovi         ###   ########.fr       */
+/*   Created: 2018/04/09 14:46:28 by bopopovi          #+#    #+#             */
+/*   Updated: 2018/04/25 16:23:43 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GNL_H
-# define GNL_H
+#include "libft.h"
 
-# define BUFF_SIZE 1
-
-# include "./libft/libft.h"
-
-typedef struct		s_fd
+size_t		ft_strlcat(char *dst, const char *src, size_t size)
 {
-	int				fd;
-	char			*buff;
-}					t_fd;
+	size_t slen;
+	size_t dlen;
 
-int		get_next_line(const int fd, char **line);
-
-#endif
+	slen = ft_strlen(src);
+	dlen = ft_strlen(dst);
+	if (dlen >= size)
+		return (size + slen);
+	if (slen < (size - dlen))
+		ft_strncpy(dst + dlen, src, slen + 1);
+	else
+		ft_memcpy(dst + dlen, src, size - dlen);
+	dst[size - 1] = '\0';
+	return (dlen + slen);
+}
