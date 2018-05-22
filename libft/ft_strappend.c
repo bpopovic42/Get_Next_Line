@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/21 18:50:36 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/05/21 22:19:40 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/05/22 17:09:36 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,19 @@ char	*ft_strappend(char *dst, char *append)
 	size_t	a_len;
 	char	*new;
 
-	d_len = ft_strlen(dst);
-	a_len = ft_strlen(append);
+	d_len = dst ? ft_strlen(dst) : 0;
+	a_len = append ? ft_strlen(append) : 0;
 	new = ft_strnew(d_len + a_len);
-	new = ft_strcpy(new, dst);
-	new = ft_strncat(new, append, a_len);
+	if (dst)
+	{
+		new = ft_strcpy(new, dst);
+		if (append)
+			new = ft_strncat(new, append, a_len);
+		ft_strdel(&dst);
+	}
+	else if (append)
+		new = ft_strcpy(new, append);
 	new[d_len + a_len] = '\0';
-	//ft_strdel(&dst);
 	dst = new;
 	new = NULL;
 	return (dst);

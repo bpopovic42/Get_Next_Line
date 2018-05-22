@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/18 20:42:42 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/05/22 16:33:48 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/05/22 20:21:10 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,16 @@ int		main(int ac, char **av)
 	}
 	while (size)
 	{
-		size = get_next_line((i % 2 == 0 ? fd1 : fd2), &line);
+		size = get_next_line(fd1, &line);
 		ft_putstr_npr(line);
 		ft_putchar('\n');
+		if (fd2)
+		{
+			size = get_next_line(fd2, &line);
+			ft_putstr_npr(line);
+			ft_putchar('\n');
+		}
+
 		i++;
 	}
 	close(fd1);
@@ -73,7 +80,7 @@ int		read_from_buffer(t_list *list, int fd, char **line, char *buff)
 	while (!(reminder = ft_strchr(tmp, '\n')))
 	{
 		read(fd, buff, BUFF_SIZE);
-		ft_strappend(tmp, buff);
+		tmp = ft_strappend(tmp, buff);
 		ft_bzero(buff, BUFF_SIZE + 1);
 	}
 	*line = ft_strndup(tmp, reminder - tmp);
