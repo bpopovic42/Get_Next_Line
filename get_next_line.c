@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/18 20:42:42 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/05/23 22:50:29 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/05/23 23:10:37 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ int		main(int ac, char **av)
 	close(fd1);
 	if (ac == 3)
 		close(fd2);
+	while (1);
 }
 
 int		get_next_line(const int fd, char **line)
@@ -120,7 +121,9 @@ int		read_from_buffer(t_list **list, int fd, char **line, char *reminder)
 			return (0);
 		}
 	}
-	ft_lstadd(list, ft_lstnew(new_fd(fd, reminder), sizeof(t_fd)));
+	if (reminder)
+		ft_lstadd(list, ft_lstnew(new_fd(fd, reminder), sizeof(t_fd)));
+	ft_strdel(&reminder);
 	return (1);
 }
 
@@ -201,6 +204,11 @@ t_fd	*get_fd(t_list **list, int fd)
 	if (ptr)
 	{
 		new = new_fd(data->fd, data->buff);
+		free(data->buff);
+		/*char *fuck = ((t_fd*)ptr->content)->buff;
+		if (fuck)
+			free(&fuck);*/
+		free(data);
 		data = NULL;
 		if (prev != ptr)
 			prev->next = ptr->next;
