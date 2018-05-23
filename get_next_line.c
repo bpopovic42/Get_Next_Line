@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/18 20:42:42 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/05/23 20:12:17 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/05/23 22:50:29 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,19 @@ int		main(int ac, char **av)
 	while (size)
 	{
 		size = get_next_line(fd1, &line);
-		ft_putstr_npr(line);
-		ft_putchar('\n');
+		if (line)
+		{
+			ft_putstr_npr(line);
+			ft_putchar('\n');
+		}
 		if (fd2)
 		{
 			size = get_next_line(fd2, &line);
-			ft_putstr_npr(line);
-			ft_putchar('\n');
+			if (line)
+			{
+				ft_putstr_npr(line);
+				ft_putchar('\n');
+			}
 		}
 		i++;
 	}
@@ -98,7 +104,8 @@ int		read_from_buffer(t_list **list, int fd, char **line, char *reminder)
 	{
 		while (!(reminder = ft_strchr(tmp, '\n')))
 		{
-			read(fd, buff, BUFF_SIZE);
+			if (!read(fd, buff, BUFF_SIZE))
+				return (0);
 			tmp = ft_strappend(tmp, buff);
 			ft_bzero(buff, BUFF_SIZE + 1);
 		}
@@ -157,6 +164,8 @@ char		*is_eof(int fd, char *buff, char *reminder)
 	return (NULL);
 }
 
+#include <stdlib.h>
+
 t_fd	*get_fd(t_list **list, int fd)
 {
 	t_list	*ptr;
@@ -168,13 +177,24 @@ t_fd	*get_fd(t_list **list, int fd)
 	prev = *list;
 	data = NULL;
 	new = NULL;
+
+	/*t_list *lol = *list;
+	t_fd	*heh = NULL;
+	while (lol != NULL)
+	{
+		heh = lol->content;
+		ft_putchar('X');
+		ft_putstr(heh->buff);
+		ft_putnbr(heh->fd);
+		ft_putendl("X");
+		lol = lol->next;
+	}*/
+
 	while (ptr != NULL)
 	{
 		data = ptr->content;
-		ft_putnbr(data->fd);
 		if (data->fd == fd)
 			break;
-		ft_putchar('X');
 		prev = ptr;
 		ptr = ptr->next;
 	}
@@ -186,12 +206,25 @@ t_fd	*get_fd(t_list **list, int fd)
 			prev->next = ptr->next;
 		else
 			prev = ptr->next;
-		ft_lstdelone(&ptr, ft_del);
+		//ft_lstdelone(&ptr, &ft_del);// ISSUE
+		ptr = NULL;
 	}
+
+	/*lol = *list;
+	heh = NULL;
+	while (lol != NULL)
+	{
+		heh = lol->content;
+		ft_putchar('W');
+		ft_putstr(heh->buff);
+		ft_putnbr(heh->fd);
+		ft_putendl("W");
+		lol = lol->next;
+	}*/
+
 	return (new);
 }
 
-#include <stdlib.h>
 
 t_fd	*new_fd(int fd, char *reminder)
 {
