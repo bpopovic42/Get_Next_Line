@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/18 20:42:42 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/05/23 16:11:40 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/05/23 17:32:36 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,10 @@ int		get_next_line(const int fd, char **line)
 	t_fd			*fd_data;
 
 	ft_bzero(buff, BUFF_SIZE + 1);
-	if ((fd_data = get_fd(&list, fd)))
+	fd_data = NULL;
+	if (*line)
+		ft_strdel(line);
+	if ((fd_data = get_fd(&list, fd)) != NULL)
 	{
 		*line = ft_strappend(*line, fd_data->buff);
 	}
@@ -77,6 +80,7 @@ int		read_from_buffer(t_list **list, int fd, char **line, char *buff)
 {
 	char	*tmp;
 	char	*reminder;
+	char	*lol = NULL;
 
 	tmp = NULL;
 	reminder = NULL;
@@ -86,7 +90,9 @@ int		read_from_buffer(t_list **list, int fd, char **line, char *buff)
 		tmp = ft_strappend(tmp, buff);
 		ft_bzero(buff, BUFF_SIZE + 1);
 	}
-	*line = ft_strndup(tmp, reminder - tmp);
+	lol = ft_strndup(tmp, reminder - tmp);
+	*line = ft_strappend(*line, lol);
+	ft_strdel(&lol);
 	reminder = ft_strdup(tmp + (reminder - tmp));
 	ft_strdel(&tmp);
 	if (*(reminder + 1) == '\0' || *(reminder + 1) == '\n')
@@ -94,7 +100,6 @@ int		read_from_buffer(t_list **list, int fd, char **line, char *buff)
 		if ((reminder = is_eof(fd, buff, reminder)) == NULL)
 			return (0);
 	}
-	ft_putstr(reminder);
 	ft_lstadd(list, ft_lstnew(new_fd(fd, reminder), sizeof(t_fd)));
 	return (1);
 }
@@ -127,8 +132,7 @@ char		*is_eof(int fd, char *buff, char *reminder)
 		{
 			if (reminder != NULL)
 				ft_strdel(&reminder);
-			reminder = ft_strdup(buff + i);
-			return (reminder);
+			return (ft_strdup(buff + i));
 		}
 		ft_bzero(buff, BUFF_SIZE + 1);
 		i = 0;
@@ -161,15 +165,17 @@ t_fd	*get_fd(t_list **list, int fd)
 		data = NULL;
 		prev->next = ptr->next;
 		ft_lstdelone(&ptr, ft_del);
-		return (data);
 	}
 	return (new);
 }
+
+#include <stdlib.h>
 
 t_fd	*new_fd(int fd, char *reminder)
 {
 	t_fd	*new;
 
+	new = (t_fd*)malloc(sizeof(*new));
 	new->fd = fd;
 	new->buff = ft_strdup(reminder);
 	return (new);
