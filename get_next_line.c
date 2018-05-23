@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/18 20:42:42 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/05/22 20:21:10 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/05/23 16:11:40 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,9 @@
 #include <unistd.h> //
 #include <fcntl.h> //
 t_fd	*new_fd(int fd, char *reminder);
-int		read_from_buffer(t_list *list, int fd, char **line, char *buff);
-t_fd	*get_fd(t_list *list, int fd);
+int		read_from_buffer(t_list **list, int fd, char **line, char *buff);
+t_fd	*get_fd(t_list **list, int fd);
+char	*is_eof(int fd, char *buff, char *reminder);
 
 int		main(int ac, char **av)
 {
@@ -64,13 +65,15 @@ int		get_next_line(const int fd, char **line)
 	t_fd			*fd_data;
 
 	ft_bzero(buff, BUFF_SIZE + 1);
-	if ((fd_data = get_fd(list, fd)))
+	if ((fd_data = get_fd(&list, fd)))
+	{
 		*line = ft_strappend(*line, fd_data->buff);
-	res = read_from_buffer(list, fd, line, buff);
+	}
+	res = read_from_buffer(&list, fd, line, buff);
 	return (res);
 }
 
-int		read_from_buffer(t_list *list, int fd, char **line, char *buff)
+int		read_from_buffer(t_list **list, int fd, char **line, char *buff)
 {
 	char	*tmp;
 	char	*reminder;
@@ -84,42 +87,83 @@ int		read_from_buffer(t_list *list, int fd, char **line, char *buff)
 		ft_bzero(buff, BUFF_SIZE + 1);
 	}
 	*line = ft_strndup(tmp, reminder - tmp);
-	if (*(reminder + 1) == '\0')
+	reminder = ft_strdup(tmp + (reminder - tmp));
+	ft_strdel(&tmp);
+	if (*(reminder + 1) == '\0' || *(reminder + 1) == '\n')
 	{
-		if (read(fd, buff, BUFF_SIZE))
-			reminder = ft_strdup(buff);
-		else
+		if ((reminder = is_eof(fd, buff, reminder)) == NULL)
 			return (0);
 	}
-	ft_lstadd(&list, ft_lstnew(new_fd(fd, reminder), sizeof(t_fd)));
+	ft_putstr(reminder);
+	ft_lstadd(list, ft_lstnew(new_fd(fd, reminder), sizeof(t_fd)));
 	return (1);
 }
 
-t_fd	*get_fd(t_list *list, int fd)
+char		*is_eof(int fd, char *buff, char *reminder)
+{
+	int		i;
+	char	*tmp;
+
+	i = 0;
+	tmp = NULL;
+	if (reminder && *(reminder + 1) == '\n')
+	{
+		while (reminder[i] && reminder[i] == '\n')
+			i++;
+		if (reminder[i])
+		{
+			tmp = reminder;
+			reminder = ft_strdup(tmp + i);
+			ft_strdel(&tmp);
+			return (reminder);
+		}
+	}
+	i = 0;
+	while (read(fd, buff, BUFF_SIZE))
+	{
+		while (buff[i] && buff[i] == '\n')
+			i++;
+		if (buff[i])
+		{
+			if (reminder != NULL)
+				ft_strdel(&reminder);
+			reminder = ft_strdup(buff + i);
+			return (reminder);
+		}
+		ft_bzero(buff, BUFF_SIZE + 1);
+		i = 0;
+	}
+	return (NULL);
+}
+
+t_fd	*get_fd(t_list **list, int fd)
 {
 	t_list	*ptr;
 	t_list	*prev;
 	t_fd	*data;
+	t_fd	*new;
 
-	ptr = list;
-	prev = list;
+	ptr = *list;
+	prev = *list;
 	data = NULL;
+	new = NULL;
 	while (ptr != NULL)
 	{
 		data = ptr->content;
 		if (data->fd == fd)
 			break;
+		prev = ptr;
 		ptr = ptr->next;
 	}
 	if (ptr)
 	{
-		while (prev->next != ptr)
-			prev = prev->next;
+		new = new_fd(data->fd, data->buff);
+		data = NULL;
 		prev->next = ptr->next;
 		ft_lstdelone(&ptr, ft_del);
 		return (data);
 	}
-	return (NULL);
+	return (new);
 }
 
 t_fd	*new_fd(int fd, char *reminder)
