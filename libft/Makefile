@@ -72,6 +72,7 @@ SRC		=	ft_islower.c \
 	ft_char_count.c \
 	ft_lstpush.c \
 	ft_strappend.c \
+	ft_strnappend.c \
 	ft_del.c
 
 OBJ		=	$(SRC:.c=.o)

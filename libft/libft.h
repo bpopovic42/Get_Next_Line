@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/04 16:27:54 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/05/22 16:23:23 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/05/23 18:48:05 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,7 @@ int					ft_issign(int c);
 int					ft_char_count(char *s, char find);
 void				ft_lstpush(t_list **alist, t_list *list);
 char				*ft_strappend(char *dst, char *append);
+char				*ft_strnappend(char *dst, char *append, size_t n);
 void				ft_del(void *content, size_t size);
 
 #endif
