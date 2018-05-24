@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/18 20:42:42 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/05/24 02:52:35 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/05/24 15:09:09 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,8 +166,14 @@ int		read_from_buffer(t_list **list, int fd, char **line, char *reminder)
 			return (0);
 		}
 	}
+	t_fd *new = NULL;
 	if (reminder)
-		ft_lstadd(list, ft_lstnew(new_fd(fd, reminder), sizeof(t_fd)));
+	{
+		new = new_fd(fd, reminder);
+		ft_lstadd(list, ft_lstnew(new, sizeof(t_fd)));
+		ft_strdel(&new->buff);
+		free(new);
+	}
 	ft_strdel(&reminder);
 	return (1);
 }
