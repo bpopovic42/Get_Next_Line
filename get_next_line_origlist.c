@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/18 20:42:42 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/05/25 00:51:01 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/05/24 21:43:28 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 #include <fcntl.h> //
 #include <stdlib.h>
 t_fd	*new_fd(int fd, char *reminder);
-char	*get_fd(t_hash **list, int fd);
-void	save_remain(t_hash **list, char *remainder, int fd);
+char	*get_fd(t_list **list, int fd);
+void	save_remain(t_list **list, char *remainder, int fd);
 char		*trim_nl(char *src);
 
 int		main(int ac, char **av)
@@ -45,7 +45,7 @@ int		main(int ac, char **av)
 		if (line)
 		{
 			ft_putstr_npr(line);
-			//ft_putchar('\n');
+			ft_putchar('\n');
 			ft_strdel(&line);
 		}
 		if (fd2)
@@ -54,7 +54,7 @@ int		main(int ac, char **av)
 			if (line)
 			{
 				ft_putstr_npr(line);
-				//ft_putchar('\n');
+				ft_putchar('\n');
 			}
 		}
 		i++;
@@ -68,7 +68,7 @@ int		main(int ac, char **av)
 
 int		get_next_line(const int fd, char **line)
 {
-	static t_hash	*list;
+	static t_list	*list;
 	char			*reminder;
 	char			buff[BUFF_SIZE + 1];
 	int				i;
@@ -78,9 +78,7 @@ int		get_next_line(const int fd, char **line)
 	ret = 1;
 	reminder = get_fd(&list, fd);
 	if (reminder)
-	{
 		reminder = trim_nl(reminder);
-	}
 	while ((i = ft_strchrin(reminder, '\n')) < 0)
 	{
 		ret = read(fd, buff, BUFF_SIZE);
@@ -103,26 +101,59 @@ int		get_next_line(const int fd, char **line)
 	return (ret > 0 ? 1 : 0);
 }
 
-void		save_remain(t_hash **list, char *remainder, int fd)
+void		save_remain(t_list **list, char *remainder, int fd)
 {
-	t_hash	*ptr;
+	t_list	*ptr;
+	t_fd	*new;
 
-	ptr = ft_hashnew(fd, remainder, sizeof(*remainder) * ft_strlen(remainder)); // THANKS TO THIS !
-	ft_hashpush(list, ptr);
-	//ft_putstr_npr(((char*)(*list)->data)); // IT WORKS !!!
+	ptr = *list;
+	new = NULL;
+	if (ptr)
+	{
+	while (ptr->next != NULL && ((t_fd*)ptr->content)->fd != fd)
+		ptr = ptr->next;
+	if (((t_fd*)ptr->content)->fd == fd)
+	{
+		if (((t_fd*)ptr->content)->buff)
+			ft_strdel(&((t_fd*)ptr->content)->buff);
+		((t_fd*)ptr->content)->buff = remainder;
+	}
+	else if (ptr->next == NULL)
+	{
+		new = (t_fd*)malloc(sizeof(t_fd));
+		new->fd = fd;
+		new->buff = remainder;
+		ptr->next = ft_lstnew(new, sizeof(new));
+	}
+	}
+	else
+	{
+		new = (t_fd*)malloc(sizeof(*new));
+		new->fd = fd;
+		new->buff = ft_strdup(remainder);
+		ft_strdel(&remainder);
+		*list = ft_lstnew(new, sizeof(*new));
+	}
 }
 
-char		*get_fd(t_hash **list, int fd)
+char		*get_fd(t_list **list, int fd)
 {
-	t_hash	*ptr;
+	t_list	*ptr;
 	char	*tmp;
 
-	if ((ptr = ft_hashpopkey(list, fd)))
+	ptr = *list;
+	tmp = NULL;
+	while (ptr)
 	{
-		if (!(tmp = ft_strdup((char*)ptr->data)))
-			return (NULL);
-		ft_hashdel(&ptr);
-		return (tmp);
+		if (((t_fd*)ptr->content)->fd == fd)
+		{
+			ft_putchar('X');
+			tmp = ft_strdup((char*)((t_fd*)ptr->content)->buff);
+			ft_strdel(&((t_fd*)ptr->content)->buff);
+			free(ptr->content);
+			return (tmp);
+		}
+		ptr = ptr->next;
 	}
 	return (NULL);
 }
