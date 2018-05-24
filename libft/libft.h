@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/04 16:27:54 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/05/24 16:26:34 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/05/25 00:21:58 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,10 @@ typedef struct		s_list
 
 typedef struct		s_hash
 {
-	size_t			key;
-	size_t			content_size;
-	void			*content;
+	int				key;
+	size_t			data_size;
+	void			*data;
+	struct s_hash	*next;
 }					t_hash;
 
 /*
@@ -117,5 +118,10 @@ void				ft_lstpush(t_list **alist, t_list *list);
 char				*ft_strappend(char *dst, char *append);
 char				*ft_strnappend(char *dst, char *append, size_t n);
 void				ft_del(void *content, size_t size);
+
+t_hash				*ft_hashnew(int key, void const *data, size_t data_size);
+t_hash				*ft_hashpopkey(t_hash **list, int key);
+void				ft_hashpush(t_hash **list, t_hash *elem);
+void				ft_hashdel(t_hash **elem);
 
 #endif
