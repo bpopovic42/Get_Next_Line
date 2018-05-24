@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/18 20:42:42 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/05/24 21:21:30 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/05/24 21:43:28 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 t_fd	*new_fd(int fd, char *reminder);
 char	*get_fd(t_list **list, int fd);
 void	save_remain(t_list **list, char *remainder, int fd);
+char		*trim_nl(char *src);
 
 int		main(int ac, char **av)
 {
@@ -76,6 +77,8 @@ int		get_next_line(const int fd, char **line)
 	i = 0;
 	ret = 1;
 	reminder = get_fd(&list, fd);
+	if (reminder)
+		reminder = trim_nl(reminder);
 	while ((i = ft_strchrin(reminder, '\n')) < 0)
 	{
 		ret = read(fd, buff, BUFF_SIZE);
@@ -88,15 +91,12 @@ int		get_next_line(const int fd, char **line)
 			return (ret);
 		}
 	}
-	ft_putchar('X');
-	ft_putstr_npr(reminder);
-	ft_putendl("X");
 	if (i == ft_strlen(reminder) || i < 0)
 		*line = ft_strdup(reminder);
 	else
 	{
 		*line = ft_strsub(reminder, 0, i);
-		save_remain(&list, ft_strdup(reminder + i + 1), fd);
+		save_remain(&list, ft_strdup(reminder + i), fd);
 	}
 	return (ret > 0 ? 1 : 0);
 }
@@ -147,7 +147,8 @@ char		*get_fd(t_list **list, int fd)
 	{
 		if (((t_fd*)ptr->content)->fd == fd)
 		{
-			tmp = ft_strdup(((t_fd*)ptr->content)->buff);
+			ft_putchar('X');
+			tmp = ft_strdup((char*)((t_fd*)ptr->content)->buff);
 			ft_strdel(&((t_fd*)ptr->content)->buff);
 			free(ptr->content);
 			return (tmp);
@@ -155,4 +156,25 @@ char		*get_fd(t_list **list, int fd)
 		ptr = ptr->next;
 	}
 	return (NULL);
+}
+
+char		*trim_nl(char *src)
+{
+	int i;
+	int j;
+	char	*res;
+
+	i = 0;
+	j = 0;
+	res = NULL;
+	while (src[i] == '\n')
+		i++;
+	while (src[i + j] && src[i + j] != '\n')
+		j++;
+	if (i != j)
+	{
+		res = ft_strsub(src, i, j);
+		ft_strdel(&src);
+	}
+	return (res);
 }
