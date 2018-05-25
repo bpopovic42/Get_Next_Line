@@ -6,15 +6,13 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/18 20:42:42 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/05/25 18:26:39 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/05/25 18:33:18 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-
 #include <unistd.h> //
-#include <fcntl.h> //
-#include <stdlib.h>
+
 t_fd	*new_fd(int fd, char *reminder);
 char	*get_fd(t_hash **list, int fd);
 void	save_remain(t_hash **list, char *remainder, int fd);

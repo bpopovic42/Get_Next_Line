@@ -6,10 +6,14 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/25 18:25:52 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/05/25 18:26:41 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/05/25 18:31:29 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "get_next_line.h"
+#include <unistd.h> //
+#include <fcntl.h> //
+#include <stdlib.h>
 
 int		main(int ac, char **av)
 {
@@ -27,7 +31,7 @@ int		main(int ac, char **av)
 	flag = 1;
 	if (ac > 1)
 	{
-		fd = (int*)malloc(sizeof(*fd) * ac - 1);
+		fd = (int*)malloc(sizeof(*fd) * (unsigned long)ac - 1);
 		while (i < ac)
 		{
 			fd[i] = open(av[i + 1], O_RDONLY);
