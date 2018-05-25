@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/19 15:15:33 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/05/25 19:42:16 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/05/25 20:43:44 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ char	*ft_strsub(char const *s, unsigned int start, size_t len)
 	char	*dst;
 	size_t	i;
 
-	if (len > 0 && len < (ft_strlen(s) - start))
+	if (len < (ft_strlen(s) - start))
 	{
 		if (!(dst = ft_strnew(len)))
 			return (NULL);
