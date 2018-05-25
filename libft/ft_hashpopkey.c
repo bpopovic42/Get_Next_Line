@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/24 23:52:12 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/05/25 00:04:35 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/05/25 15:14:51 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ t_hash	*ft_hashpopkey(t_hash **list, int key)
 	{
 		ptr = *list;
 		node = ptr;
-		while (ptr->next)
+		while (ptr)
 		{
 			if (ptr->key == key)
 			{
