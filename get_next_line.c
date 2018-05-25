@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/18 20:42:42 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/05/25 00:51:01 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/05/25 16:50:29 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ t_fd	*new_fd(int fd, char *reminder);
 char	*get_fd(t_hash **list, int fd);
 void	save_remain(t_hash **list, char *remainder, int fd);
 char		*trim_nl(char *src);
+int			is_line(char **str);
 
 int		main(int ac, char **av)
 {
@@ -39,13 +40,15 @@ int		main(int ac, char **av)
 		if (ac == 3)
 			fd2 = open(av[2], O_RDONLY);
 	}
+	else if (ac == 1)
+		fd1 = 0;
 	while (size)
 	{
 		size = get_next_line(fd1, &line);
 		if (line)
 		{
 			ft_putstr_npr(line);
-			//ft_putchar('\n');
+			ft_putchar('\n');
 			ft_strdel(&line);
 		}
 		if (fd2)
@@ -54,7 +57,8 @@ int		main(int ac, char **av)
 			if (line)
 			{
 				ft_putstr_npr(line);
-				//ft_putchar('\n');
+				ft_putchar('\n');
+				ft_strdel(&line);
 			}
 		}
 		i++;
@@ -81,26 +85,58 @@ int		get_next_line(const int fd, char **line)
 	{
 		reminder = trim_nl(reminder);
 	}
-	while ((i = ft_strchrin(reminder, '\n')) < 0)
+	while ((i = is_line(&reminder)) < 0)
 	{
 		ret = read(fd, buff, BUFF_SIZE);
 		buff[ret] = '\0';
-		reminder = ft_strappend(reminder, buff);
 		if (ret == 0)
 		{
 			*line = ft_strdup(reminder);
 			ft_strdel(&reminder);
 			return (ret);
 		}
+		else
+			reminder = ft_strappend(reminder, buff);
 	}
 	if (i == ft_strlen(reminder) || i < 0)
 		*line = ft_strdup(reminder);
 	else
 	{
 		*line = ft_strsub(reminder, 0, i);
-		save_remain(&list, ft_strdup(reminder + i), fd);
+		save_remain(&list, ft_strdup(reminder + i + 1), fd);
 	}
 	return (ret > 0 ? 1 : 0);
+}
+
+int			is_line(char **str)
+{
+	int i;
+	int ret;
+
+	i = 0;
+	ret = 0;
+	if (*str)
+	{
+		/*while (*str && (*str)[i] == '\n')
+		{
+			i++;
+		}
+		if (!*str[i])
+		{
+			ft_strdel(str);
+			return (-1);
+		}
+		ret = ft_strchrin(*str, '\n');
+		if (ret > 0 || ret == -1)
+			return (ret);*/
+		*str = trim_nl(*str);
+		if (*str)
+		{
+			ret = ft_strchrin(*str, '\n');
+			return (ret);
+		}
+	}
+	return (-1);
 }
 
 void		save_remain(t_hash **list, char *remainder, int fd)
@@ -138,11 +174,9 @@ char		*trim_nl(char *src)
 	res = NULL;
 	while (src[i] == '\n')
 		i++;
-	while (src[i + j] && src[i + j] != '\n')
-		j++;
-	if (i != j)
+	if (src[i])
 	{
-		res = ft_strsub(src, i, j);
+		res = ft_strsub(src, i, ft_strlen(src) - i);
 		ft_strdel(&src);
 	}
 	return (res);
