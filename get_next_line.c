@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/18 20:42:42 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/05/25 20:43:13 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/05/25 21:38:20 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,15 @@ int		get_next_line(const int fd, char **line)
 		{
 			if (ret == 0)
 			{
-				if (reminder)
+				reminder = ft_strappend(reminder, buff);
+				if (reminder[ret])
 				{
 					*line = ft_strdup(reminder);
 					ft_strdel(&reminder);
+					return (1);
 				}
+				else
+					*line = ft_strappend(*line, buff);
 				return (0);
 			}
 			else
