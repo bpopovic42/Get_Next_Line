@@ -24,6 +24,7 @@ SRC		=	ft_islower.c \
 	ft_strncat.c \
 	ft_strlcat.c \
 	ft_strrchr.c \
+	ft_strchr.c \
 	ft_strchrin.c \
 	ft_strstr.c \
 	ft_strnstr.c \
