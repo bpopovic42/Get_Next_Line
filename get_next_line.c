@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/18 20:42:42 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/05/27 23:12:25 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/05/27 23:32:46 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ int		get_next_line(const int fd, char **line)
 	int				i;
 	int				ret;
 
-	i = 0;
 	ret = 1;
 	reminder = get_fd(&list, fd);
 	while ((i = ft_strchrin(reminder, '\n')) < 0 && ret)
@@ -36,18 +35,15 @@ int		get_next_line(const int fd, char **line)
 		buff[ret] = '\0';
 		reminder = ft_strappend(reminder, buff);
 	}
-	if (i < 0)
-	{
-		*line = ft_strdup(reminder);
-		if (reminder[0])
-			return (1);
-	}
-	else
+	if (i >= 0)
 	{
 		*line = ft_strsub(reminder, 0, (size_t)i);
 		save_remain(&list, ft_strdup(reminder + i + 1), fd);
-		return (1);
 	}
+	else
+		*line = ft_strdup(reminder);
+	ret = (reminder[0]) ? 1 : ret;
+	ft_strdel(&reminder);
 	return (ret);
 }
 
