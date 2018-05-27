@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/18 20:42:42 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/05/27 22:47:26 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/05/27 23:12:25 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,46 +29,26 @@ int		get_next_line(const int fd, char **line)
 	i = 0;
 	ret = 1;
 	reminder = get_fd(&list, fd);
-	while ((i = ft_strchrin(reminder, '\n')) < 0)
+	while ((i = ft_strchrin(reminder, '\n')) < 0 && ret)
 	{
 		if ((ret = (int)read(fd, buff, BUFF_SIZE)) < 0)
 			return (-1);
 		buff[ret] = '\0';
 		reminder = ft_strappend(reminder, buff);
-		if (ret < BUFF_SIZE)
-		{
-			if (ret == 0)
-			{
-				if (reminder[ret])
-				{
-					*line = ft_strdup(reminder);
-					ft_strdel(&reminder);
-					return (1);
-				}
-				else
-					*line = ft_strappend(*line, buff);
-				return (0);
-			}
-			else
-			{
-				i = ft_strchrin(reminder, '\n');
-				if (i == -1)
-					*line = ft_strdup(reminder);
-				else
-					*line = ft_strsub(reminder, 0, (size_t)i);
-				ft_strdel(&reminder);
-				return (1);
-			}
-		}
 	}
-	if (i == (int)ft_strlen(reminder) || i < 0)
+	if (i < 0)
+	{
 		*line = ft_strdup(reminder);
+		if (reminder[0])
+			return (1);
+	}
 	else
 	{
 		*line = ft_strsub(reminder, 0, (size_t)i);
 		save_remain(&list, ft_strdup(reminder + i + 1), fd);
+		return (1);
 	}
-	return (ret > 0 ? 1 : 0);
+	return (ret);
 }
 
 void		save_remain(t_hash **list, char *remainder, int fd)
