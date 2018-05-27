@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/18 20:42:42 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/05/27 23:32:46 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/05/27 23:44:22 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void		save_remain(t_hash **list, char *remainder, int fd)
 {
 	t_hash	*ptr;
 
-	ptr = ft_hashnew(fd, remainder, sizeof(*remainder) * ft_strlen(remainder));
+	ptr = ft_hashnew(fd, remainder, (sizeof(*remainder) * ft_strlen(remainder)) + 1); // SOLVED
 	ft_hashpush(list, ptr);
 }
 
