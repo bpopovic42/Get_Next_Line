@@ -1,8 +1,14 @@
-NAME	=	libft.a
+NAME		=	libft.a
 
-CC		=	gcc
+CC			=	gcc
 
-SRC		=	ft_islower.c \
+SDIR		=	./srcs/
+
+ODIR		=	./objs/
+
+IDIR		=	./includes/
+
+SRCS		=	ft_islower.c \
 	ft_isupper.c \
 	ft_isalpha.c \
 	ft_isdigit.c \
@@ -25,7 +31,7 @@ SRC		=	ft_islower.c \
 	ft_strlcat.c \
 	ft_strrchr.c \
 	ft_strchr.c \
-	ft_strchrin.c \
+	ft_strchri.c \
 	ft_strstr.c \
 	ft_strnstr.c \
 	ft_itoa_base.c \
@@ -73,37 +79,41 @@ SRC		=	ft_islower.c \
 	ft_char_count.c \
 	ft_lstpush.c \
 	ft_strappend.c \
-	ft_strnappend.c \
-	ft_del.c \
 	ft_hashnew.c \
 	ft_hashpopkey.c \
 	ft_hashpush.c \
 	ft_hashdel.c
 
-OBJ		=	$(SRC:.c=.o)
+OBJS		=	$(SRCS:.c=.o)
 
-CFLAGS	=	-Wall -Wextra -Werror
+INCS		=	libft.h
 
-HEADERS	=	libft.h
+SRC			=	$(addprefix $(SDIR), $(SRCS))
 
-all		:	$(NAME)
+OBJ			=	$(addprefix $(ODIR), $(OBJS))
+
+INC			=	$(addprefix -I,$(IDIR))
+
+CFLAGS		=	-Wall -Wextra -Werror
+
+all			:	$(NAME)
 			@echo > /dev/null
 
-$(NAME)	:	$(OBJ)
+$(NAME)		:	$(OBJ)
 			@ar rc $(NAME) $(OBJ)
 			@ranlib $(NAME)
 			@echo "[96mLibft [92mCompiled[0m"
 
-%.o		:	%.c $(HEADERS)
-			@$(CC) $(CFLAGS) -I $(HEADERS) -c -o $@ $<
+$(ODIR)%.o	:	$(SDIR)%.c
+			@$(CC) $(CFLAGS) $(INC) -c $< -o $@
 
-clean	:
+clean		:
 			@echo "Cleaning the [96mLibft[0m files..."
 			@rm -f $(OBJ)
 
-fclean	:	clean
+fclean		:	clean
 			@rm -f $(NAME)
 
-re		:	fclean all
+re			:	fclean all
 
-.PHONY	: all, clean, fclean, re
+.PHONY		: all, clean, fclean, re
