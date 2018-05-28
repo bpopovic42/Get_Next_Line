@@ -6,14 +6,17 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/25 18:25:52 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/05/28 15:37:35 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/05/28 20:01:56 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include <unistd.h> //
-#include <fcntl.h> //
+#include <unistd.h>
+#include <fcntl.h>
 #include <stdlib.h>
+
+void	read_from_fds(int *fd, int ac, char *line);
+int		*get_fd_tab(int ac, char **av);
 
 int		main(int ac, char **av)
 {
@@ -21,53 +24,18 @@ int		main(int ac, char **av)
 	char	*line;
 	int		size;
 	int		i;
-	int		std;
-	int		flag;
 
 	line = NULL;
+	fd = NULL;
 	size = 1;
 	i = 0;
-	fd = NULL;
-	flag = 1;
 	if (ac > 1)
 	{
-		fd = (int*)malloc(sizeof(*fd) * (unsigned long)ac - 1);
-		while (i < ac)
-		{
-			fd[i] = open(av[i + 1], O_RDONLY);
-			i++;
-		}
+		if (!(fd = get_fd_tab(ac, av)))
+			return (1);
 	}
-	else
-		std = 0;
-	i = 0;
 	if (fd)
-	{
-		while (flag)
-		{
-			flag = 0;
-			while (i < ac)
-			{
-				if (fd[i] > -1)
-				{
-					if (!(size = get_next_line(fd[i], &line)))
-					{
-						close(fd[i]);
-						fd[i] = -1;
-						ft_strdel(&line);
-					}
-					else
-					{
-						flag = 1;
-						ft_putstr_npr(line);
-						ft_strdel(&line);
-					}
-				}
-				i++;
-			}
-			i = 0;
-		}
-	}
+		read_from_fds(fd, ac, line);
 	else
 	{
 		while (size)
@@ -81,4 +49,50 @@ int		main(int ac, char **av)
 		free(fd);
 	if (line)
 		ft_strdel(&line);
+}
+
+void	read_from_fds(int *fd, int ac, char *line)
+{
+	int flag;
+	int i;
+
+	flag = 1;
+	i = 0;
+	while (flag)
+	{
+		flag = 0;
+		while (i < ac)
+		{
+			if (fd[i] > -1)
+			{
+				if (get_next_line(fd[i], &line) == 0)
+				{
+					close(fd[i]);
+					fd[i] = -1;
+				}
+				else
+					flag = 1;
+				ft_putstr_npr(line);
+				ft_strdel(&line);
+			}
+			i++;
+		}
+		i = 0;
+	}
+}
+
+int		*get_fd_tab(int ac, char **av)
+{
+	int i;
+	int *fd;
+
+	i = 0;
+	if (!(fd = (int*)malloc(sizeof(*fd) * (unsigned long)ac)))
+		return (NULL);
+	while (i < ac)
+	{
+		fd[i] = open(av[i + 1], O_RDONLY);
+		i++;
+	}
+	return(fd);
 }
