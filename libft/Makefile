@@ -117,7 +117,7 @@ $(ODIR)%.o	:	$(SDIR)%.c $(HEADER)
 clean		:
 			@echo "Cleaning the [96mLibft[0m files..."
 			@rm -f $(OBJ)
-			@rmdir $(ODIR)
+			@rm -rf $(ODIR)
 
 fclean		:	clean
 			@rm -f $(NAME)
