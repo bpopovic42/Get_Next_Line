@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/18 20:42:42 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/05/28 16:04:54 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/05/28 17:10:34 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int			get_next_line(const int fd, char **line)
 	if (fd < 0 || !(line))
 		return (-1);
 	remain = get_fd(&list, fd);
-	while ((i = ft_strchrin(remain, '\n')) < 0 && ret)
+	while ((i = ft_strchri(remain, '\n')) < 0 && ret)
 	{
 		if ((ret = (int)read(fd, buff, BUFF_SIZE)) < 0)
 			return (-1);
