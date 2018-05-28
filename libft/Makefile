@@ -86,7 +86,9 @@ SRCS		=	ft_islower.c \
 
 OBJS		=	$(SRCS:.c=.o)
 
-INCS		=	libft.h
+HEADERS		=	libft.h
+
+HEADER		=	$(addprefix $(IDIR), $(HEADERS))
 
 SRC			=	$(addprefix $(SDIR), $(SRCS))
 
@@ -109,7 +111,7 @@ $(OBJ)		:	| $(ODIR)
 $(ODIR)		:
 			@mkdir objs
 
-$(ODIR)%.o	:	$(SDIR)%.c
+$(ODIR)%.o	:	$(SDIR)%.c $(HEADER)
 			@$(CC) $(CFLAGS) $(INC) -c $< -o $@
 
 clean		:
