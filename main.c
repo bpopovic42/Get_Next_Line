@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/25 18:25:52 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/05/25 18:31:29 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/05/28 15:37:35 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ int		main(int ac, char **av)
 					{
 						close(fd[i]);
 						fd[i] = -1;
+						ft_strdel(&line);
 					}
 					else
 					{
@@ -76,6 +77,8 @@ int		main(int ac, char **av)
 			ft_strdel(&line);
 		}
 	}
+	if (fd)
+		free(fd);
 	if (line)
 		ft_strdel(&line);
 }
