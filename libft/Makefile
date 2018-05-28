@@ -104,12 +104,18 @@ $(NAME)		:	$(OBJ)
 			@ranlib $(NAME)
 			@echo "[96mLibft [92mCompiled[0m"
 
+$(OBJ)		:	| $(ODIR)
+
+$(ODIR)		:
+			@mkdir objs
+
 $(ODIR)%.o	:	$(SDIR)%.c
 			@$(CC) $(CFLAGS) $(INC) -c $< -o $@
 
 clean		:
 			@echo "Cleaning the [96mLibft[0m files..."
 			@rm -f $(OBJ)
+			@rmdir $(ODIR)
 
 fclean		:	clean
 			@rm -f $(NAME)
