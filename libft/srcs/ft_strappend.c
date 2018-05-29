@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/21 18:50:36 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/05/23 17:30:05 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/05/29 14:57:31 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ char	*ft_strappend(char *dst, char *append)
 
 	d_len = dst ? ft_strlen(dst) : 0;
 	a_len = append ? ft_strlen(append) : 0;
-	new = ft_strnew(d_len + a_len);
+	if (!(new = ft_strnew(d_len + a_len)))
+		return (NULL);
 	if (dst)
 	{
 		new = ft_strcpy(new, dst);
