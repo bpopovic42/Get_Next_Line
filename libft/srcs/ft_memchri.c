@@ -1,30 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_memchri.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/05/18 20:45:59 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/05/29 22:09:25 by bopopovi         ###   ########.fr       */
+/*   Created: 2018/05/29 21:12:14 by bopopovi          #+#    #+#             */
+/*   Updated: 2018/05/29 21:13:59 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#include "libft.h"
 
-# define BUFF_SIZE 1024
-
-# include "libft.h"
-
-typedef struct		s_fd
+int		ft_memchri(void *s, int c, size_t size)
 {
-	int				fd;
-	char			*buff;
-}					t_fd;
+	size_t i;
 
-int					get_next_line(const int fd, char **line);
-size_t				get_fd(t_hash **list, int fd, char **remain);
-void				save_remain(t_hash **list, char *remain, int fd, int size);
-
-#endif
+	i = 0;
+	while (i < size && ((char*)s)[i] != c)
+		i++;
+	if (i == size)
+		return (-1);
+	else
+		return (i);
+}

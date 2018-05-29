@@ -82,7 +82,12 @@ SRCS		=	ft_islower.c \
 	ft_hashnew.c \
 	ft_hashpopkey.c \
 	ft_hashpush.c \
-	ft_hashdel.c
+	ft_hashdel.c \
+	ft_memapp.c \
+	ft_memcat.c \
+	ft_memchri.c \
+	ft_memdup.c \
+	ft_putstrn.c
 
 OBJS		=	$(SRCS:.c=.o)
 
@@ -117,7 +122,7 @@ $(ODIR)%.o	:	$(SDIR)%.c $(HEADER)
 clean		:
 			@echo "Cleaning the [96mLibft[0m files..."
 			@rm -f $(OBJ)
-			@rmdir $(ODIR)
+			@rm -rf $(ODIR)
 
 fclean		:	clean
 			@rm -f $(NAME)

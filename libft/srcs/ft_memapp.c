@@ -1,38 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strappend.c                                     :+:      :+:    :+:   */
+/*   ft_memapp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/21 18:50:36 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/05/29 14:57:31 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/05/29 21:57:50 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strappend(char *dst, char *append)
+void	*ft_memapp(void *d, const void *ap, size_t dl, size_t al)
 {
-	size_t	d_len;
-	size_t	a_len;
-	char	*new;
+	void	*new;
 
-	d_len = dst ? ft_strlen(dst) : 0;
-	a_len = append ? ft_strlen(append) : 0;
-	if (!(new = ft_strnew(d_len + a_len)))
+	if (!(new = ft_memalloc(sizeof(char) * (dl + al))))
 		return (NULL);
-	if (dst)
+	if (d)
 	{
-		new = ft_strcpy(new, dst);
-		if (append)
-			new = ft_strncat(new, append, a_len);
-		ft_strdel(&dst);
+		new = ft_memcpy(new, d, dl);
+		if (ap)
+			new = ft_memcat(new, ap, al);
+		ft_memdel(&d);
 	}
-	else if (append)
-		new = ft_strcpy(new, append);
-	new[d_len + a_len] = '\0';
-	dst = new;
-	new = NULL;
-	return (dst);
+	else if (ap)
+		new = ft_memcpy(new, ap, al);
+	((char*)new)[dl + al] = '\0';
+	return (new);
 }
