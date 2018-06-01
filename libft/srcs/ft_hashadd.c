@@ -1,42 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_hashpopkey.c                                    :+:      :+:    :+:   */
+/*   ft_hashadd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/05/24 23:52:12 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/05/25 16:52:30 by bopopovi         ###   ########.fr       */
+/*   Created: 2018/06/01 17:59:17 by bopopovi          #+#    #+#             */
+/*   Updated: 2018/06/01 18:25:01 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-t_hash	*ft_hashpopkey(t_hash **list, int key)
-{
-	t_hash	*ptr;
-	t_hash	*node;
+/*
+**	TODO: Check if key already exists in list (ERROR case)
+*/
 
-	if (*list)
+int		ft_hashadd(t_hash **list, int key, void *data, size_t size)
+{
+	if (list)
 	{
-		ptr = *list;
-		node = ptr;
-		while (ptr)
-		{
-			if (ptr->key == key)
-			{
-				if (ptr == *list)
-					*list = (*list)->next;
-				else
-				{
-					while (node->next != ptr)
-						node = node->next;
-					node->next = ptr->next;
-				}
-				return (ptr);
-			}
-			ptr = ptr->next;
-		}
+		ft_hashpush(list, ft_hashnew(key, data, size));
+		return (1);
 	}
-	return (NULL);
+	return (-1);
 }

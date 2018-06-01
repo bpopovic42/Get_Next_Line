@@ -1,28 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_memcat.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/04/05 16:05:59 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/06/01 17:24:07 by bopopovi         ###   ########.fr       */
+/*   Created: 2018/05/29 20:59:10 by bopopovi          #+#    #+#             */
+/*   Updated: 2018/05/29 21:07:08 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t		ft_strlen(const char *s)
+void	*ft_memcat(void *dst, const void *append, size_t n)
 {
-	size_t i;
+	int		d_len;
+	size_t	i;
 
-	if (s)
+	d_len = ft_strlen((char*)dst);
+	i = 0;
+	while (i < n)
 	{
-		i = 0;
-		while (s[i])
-			i++;
-		return (i);
+		((char*)dst)[d_len + i] = ((char*)append)[i];
+		i++;
 	}
-	else
-		return (0);
+	return (dst);
 }

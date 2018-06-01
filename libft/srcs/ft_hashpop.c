@@ -1,28 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_hashpop.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/04/05 16:05:59 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/06/01 17:24:07 by bopopovi         ###   ########.fr       */
+/*   Created: 2018/05/24 23:52:12 by bopopovi          #+#    #+#             */
+/*   Updated: 2018/06/01 17:22:48 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t		ft_strlen(const char *s)
+t_hash	*ft_hashpop(t_hash **list, int key)
 {
-	size_t i;
+	t_hash	*ptr;
+	t_hash	*node;
 
-	if (s)
+	if (*list)
 	{
-		i = 0;
-		while (s[i])
-			i++;
-		return (i);
+		ptr = *list;
+		node = ptr;
+		while (ptr)
+		{
+			if (ptr->key == key)
+			{
+				if (ptr == *list)
+					*list = (*list)->next;
+				else
+				{
+					while (node->next != ptr)
+						node = node->next;
+					node->next = ptr->next;
+				}
+				return (ptr);
+			}
+			ptr = ptr->next;
+		}
 	}
-	else
-		return (0);
+	return (NULL);
 }

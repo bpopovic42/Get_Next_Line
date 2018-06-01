@@ -1,28 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_memapp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/04/05 16:05:59 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/06/01 17:24:07 by bopopovi         ###   ########.fr       */
+/*   Created: 2018/05/21 18:50:36 by bopopovi          #+#    #+#             */
+/*   Updated: 2018/05/29 21:57:50 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t		ft_strlen(const char *s)
+void	*ft_memapp(void *d, const void *ap, size_t dl, size_t al)
 {
-	size_t i;
+	void	*new;
 
-	if (s)
+	if (!(new = ft_memalloc(sizeof(char) * (dl + al))))
+		return (NULL);
+	if (d)
 	{
-		i = 0;
-		while (s[i])
-			i++;
-		return (i);
+		new = ft_memcpy(new, d, dl);
+		if (ap)
+			new = ft_memcat(new, ap, al);
+		ft_memdel(&d);
 	}
-	else
-		return (0);
+	else if (ap)
+		new = ft_memcpy(new, ap, al);
+	((char*)new)[dl + al] = '\0';
+	return (new);
 }

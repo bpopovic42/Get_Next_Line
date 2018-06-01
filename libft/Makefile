@@ -80,9 +80,16 @@ SRCS		=	ft_islower.c \
 	ft_lstpush.c \
 	ft_strappend.c \
 	ft_hashnew.c \
-	ft_hashpopkey.c \
+	ft_hashpop.c \
+	ft_hashget.c \
 	ft_hashpush.c \
-	ft_hashdel.c
+	ft_hashdel.c \
+	ft_hashadd.c \
+	ft_memapp.c \
+	ft_memcat.c \
+	ft_memchri.c \
+	ft_memdup.c \
+	ft_putstrn.c
 
 OBJS		=	$(SRCS:.c=.o)
 

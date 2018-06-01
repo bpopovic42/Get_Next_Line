@@ -1,28 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_memdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/04/05 16:05:59 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/06/01 17:24:07 by bopopovi         ###   ########.fr       */
+/*   Created: 2018/05/29 22:01:46 by bopopovi          #+#    #+#             */
+/*   Updated: 2018/05/29 22:04:24 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t		ft_strlen(const char *s)
+void	*ft_memdup(const void *src, size_t n)
 {
-	size_t i;
+	void *dup;
 
-	if (s)
-	{
-		i = 0;
-		while (s[i])
-			i++;
-		return (i);
-	}
-	else
-		return (0);
+	dup = ft_memalloc(n);
+	dup = ft_memcpy(dup, src, n);
+	return (dup);
 }
