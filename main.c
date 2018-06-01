@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/25 18:25:52 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/05/29 22:19:23 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/06/01 17:57:27 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,9 @@ void	read_from_fds(int *fd, int ac, char *line)
 				}
 				else
 					flag = 1;
-				ft_putchar(line[0]);
-				ft_print_memory(line, 8);
+				ft_putstr(line);
+				//ft_putchar(line[0]);
+				//ft_print_memory(line, 8);
 				ft_strdel(&line);
 			}
 			i++;
