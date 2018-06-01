@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/18 20:42:42 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/05/29 22:23:04 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/06/01 17:27:44 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,9 @@ int			get_next_line(const int fd, char **line)
 	remain = NULL;
 	if (fd < 0 || !(line))
 		return (-1);
-	total = get_fd(&list, fd, &remain);
+	total = ft_strlen(*line = (char*)ft_hashget(&list, fd));
+	if (*line)
+		ft_putstr(*line);
 	while ((i = ft_memchri(remain, '\n', total)) < 0 && ret)
 	{
 		if ((ret = (int)read(fd, buff, BUFF_SIZE)) < 0)
@@ -52,20 +54,4 @@ void		save_remain(t_hash **list, char *remain, int fd, int size)
 	ptr = ft_hashnew(fd, remain, (sizeof(*remain) * size) + 1);
 	ft_strdel(&remain);
 	ft_hashpush(list, ptr);
-}
-
-size_t		get_fd(t_hash **list, int fd, char **remain)
-{
-	t_hash	*ptr;
-	size_t	data_size;
-
-	if ((ptr = ft_hashpopkey(list, fd)))
-	{
-		if (!(*remain = ft_strdup((char*)ptr->data)))
-			return (0);
-		data_size = ptr->data_size;
-		ft_hashdel(&ptr);
-		return (data_size);
-	}
-	return (0);
 }
