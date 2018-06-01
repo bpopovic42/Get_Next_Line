@@ -84,6 +84,7 @@ SRCS		=	ft_islower.c \
 	ft_hashget.c \
 	ft_hashpush.c \
 	ft_hashdel.c \
+	ft_hashadd.c \
 	ft_memapp.c \
 	ft_memcat.c \
 	ft_memchri.c \
