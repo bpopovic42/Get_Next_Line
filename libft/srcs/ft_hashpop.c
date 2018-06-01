@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_hashpopkey.c                                    :+:      :+:    :+:   */
+/*   ft_hashpop.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/24 23:52:12 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/05/29 21:27:45 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/06/01 17:22:48 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-t_hash	*ft_hashpopkey(t_hash **list, int key)
+t_hash	*ft_hashpop(t_hash **list, int key)
 {
 	t_hash	*ptr;
 	t_hash	*node;
