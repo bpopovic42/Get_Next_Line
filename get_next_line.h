@@ -6,14 +6,14 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/18 20:45:59 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/05/29 22:09:25 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/06/01 19:05:44 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 
-# define BUFF_SIZE 1024
+# define BUFF_SIZE 1
 
 # include "libft.h"
 
@@ -24,7 +24,5 @@ typedef struct		s_fd
 }					t_fd;
 
 int					get_next_line(const int fd, char **line);
-size_t				get_fd(t_hash **list, int fd, char **remain);
-void				save_remain(t_hash **list, char *remain, int fd, int size);
 
 #endif
