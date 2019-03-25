@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/25 18:25:52 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/06/01 19:18:46 by bopopovi         ###   ########.fr       */
+/*   Updated: 2019/03/24 19:32:37 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,8 @@ int		main(int ac, char **av)
 		while (size)
 		{
 			size = get_next_line(0, &line);
-			ft_putstr_npr(line);
+			if (line)
+				ft_putstr_npr(line);
 			ft_strdel(&line);
 		}
 	}
